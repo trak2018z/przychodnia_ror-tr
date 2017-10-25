@@ -1,0 +1,21 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to 'Przychodni@', root_path, class: 'navbar-brand' %>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav">
+		<li><%= link_to 'O stronie', static_pages_about_url %></li>
+      </ul>
+      
+		<ul class="nav navbar-nav pull-right">
+		</ul>
+    </div>
+  </div>
+</nav>
