@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">Przełącz panel nawigacyjny</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -13,8 +13,15 @@
       <ul class="nav navbar-nav">
 		<li><%= link_to 'O stronie', static_pages_about_url %></li>
       </ul>
-      
-		<ul class="nav navbar-nav pull-right">
+
+		<ul class="nav navbar-nav navbar-right">
+      <% if patient_signed_in? %>
+        <li><%= link_to "Zmień hasło", edit_patient_registration_path %> </li>
+        <li><%= link_to destroy_patient_session_path, :method => :delete do %>Wyloguj<% end %></li>
+      <% else %>
+        <li><%= link_to "Zarejestruj konto Pacjenta" ,new_patient_registration_path %></li>
+        <li><%= link_to new_patient_session_path do %>Zaloguj<% end %></li>
+      <% end %>
 		</ul>
     </div>
   </div>

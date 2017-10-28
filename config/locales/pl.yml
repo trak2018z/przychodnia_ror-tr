@@ -1,7 +1,31 @@
 pl:
   activerecord:
+    errors:
+      models:
+        patient:
+          attributes:
+            email:
+              blank: "jest wymagany"
+            password:
+              blank: "jest wymagane"
+            name:
+              blank: "są wymagane"
+            age:
+              blank: "jest wymagany"
+            pesel:
+              blank: "jest wymagany"
+              wrong_length: "musi zawierać 11 cyfr"
+            phone:
+              blank: "jest wymagany"
+            address:
+              blank: "jest wymagany"
     attributes:
-      user:
+      patient:
+        name: Imię i nazwisko
+        age: Wiek
+        pesel: PESEL
+        phone: Telefon
+        address: Adres
         confirmation_sent_at:
         confirmation_token:
         confirmed_at:
@@ -26,7 +50,7 @@ pl:
         unlock_token:
         updated_at:
     models:
-      user: Użytkownik
+      patient: Pacjent
   devise:
     confirmations:
       confirmed: Konto zostało poprawnie aktywowane.
@@ -107,6 +131,7 @@ pl:
       already_signed_out: Wylogowano pomyślnie.
       new:
         sign_in: Zaloguj się
+        remember_me: Zapamiętaj mnie
       signed_in: Zalogowano pomyślnie.
       signed_out: Wylogowano pomyślnie.
     shared:
@@ -132,7 +157,7 @@ pl:
       not_found: nie znaleziono
       not_locked: nie był zablokowany
       not_saved:
-        few: "%{resource} nie został zapisany z powodu %{count} błędów:"
-        many: "%{resource} nie został zapisany z powodu %{count} błędów:"
-        one: "%{resource} nie został zapisany z powodu jednego błędu:"
-        other: "%{resource} nie został zapisany z powodu %{count} błędów:"
+        few: "Spróbuj ponownie poprawiając następujące błędy:"
+        many: "Spróbuj ponownie poprawiając następujące błędy:"
+        one: "Spróbuj ponownie poprawiając błąd:"
+        other: "Spróbuj ponownie poprawiając następujące błędy:"

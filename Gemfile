@@ -5,7 +5,6 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
@@ -23,8 +22,10 @@ gem 'coffee-script-source', '1.8.0'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
+gem 'devise-bootstrap-views'
 
-gem 'bcrypt', platforms: :ruby
+# gem 'bcrypt', platforms: :ruby
+gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -37,8 +38,6 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

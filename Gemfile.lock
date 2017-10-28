@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/codahale/bcrypt-ruby.git
+  revision: f2db689ba567d1a018f4dacb1ccf909adc93e887
+  specs:
+    bcrypt (3.1.11)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -43,7 +49,6 @@ GEM
     arel (8.0.0)
     autoprefixer-rails (7.1.6)
       execjs
-    bcrypt (3.1.11-x86-mingw32)
     bindex (0.5.0)
     bootstrap-datepicker-rails (1.7.1.1)
       railties (>= 3.0)
@@ -76,6 +81,7 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
+    devise-bootstrap-views (0.0.11)
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18-x86-mingw32)
@@ -144,7 +150,7 @@ GEM
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
     rubyzip (1.2.1)
-    sass (3.5.2)
+    sass (3.5.3)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -171,7 +177,7 @@ GEM
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.3)
-    tzinfo (1.2.3)
+    tzinfo (1.2.4)
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.3)
       tzinfo (>= 1.0.0)
@@ -194,7 +200,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  bcrypt
+  bcrypt!
   bootstrap-datepicker-rails
   bootstrap-sass
   byebug
@@ -202,6 +208,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   coffee-script-source (= 1.8.0)
   devise
+  devise-bootstrap-views
   jbuilder (~> 2.5)
   jquery-rails
   pg (~> 0.18)
