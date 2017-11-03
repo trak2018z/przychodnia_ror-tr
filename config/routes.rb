@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   devise_for :patients
+  devise_for :doctors, :class_name => 'Doctor', :controllers => {:registrations => "doctors/registrations"} do
+    get   "doctor/sign_up" => "doctor/registrations#new", :as => :new_doctor_registration
+  end
+  #devise_for :doctors, path: 'doctors', controllers: { registrations: "doctors/registrations", sessions: "doctors/sessions" }
   get 'static_pages/home'
   get 'static_pages/about'
   root 'static_pages#home'
+  #resources :patients
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -16,11 +16,20 @@
 
 		<ul class="nav navbar-nav navbar-right">
       <% if patient_signed_in? %>
-        <li><%= link_to "Zmień hasło", edit_patient_registration_path %> </li>
+        <li><p class="navbar-text" id="custom-navbar-text"><%= current_patient.name %></p>
+        <li><%= link_to "Edytuj konto", edit_patient_registration_path %> </li>
         <li><%= link_to destroy_patient_session_path, :method => :delete do %>Wyloguj<% end %></li>
+      <% elsif doctor_signed_in? %>
+        <li><p class="navbar-text" id="custom-navbar-text"><%= current_doctor.name %></p>
+        <% if current_doctor.try(:admin?) %>
+          <li><%= link_to "Zarejestruj konto Lekarza" ,new_doctor_registration_path %></li>
+        <% end %>
+        <li><%= link_to "Edytuj konto", edit_doctor_registration_path %> </li>
+        <li><%= link_to destroy_doctor_session_path, :method => :delete do %>Wyloguj<% end %></li>
       <% else %>
         <li><%= link_to "Zarejestruj konto Pacjenta" ,new_patient_registration_path %></li>
-        <li><%= link_to new_patient_session_path do %>Zaloguj<% end %></li>
+        <li><%= link_to new_patient_session_path do %>Zaloguj (Pacjent)<% end %></li>
+        <li><%= link_to new_doctor_session_path do %>Zaloguj (Lekarz)<% end %></li>
       <% end %>
 		</ul>
     </div>
