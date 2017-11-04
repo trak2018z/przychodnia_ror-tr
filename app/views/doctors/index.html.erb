@@ -1,0 +1,17 @@
+<h3> Lista lekarzy: </h3>
+  <table class=" table table-striped">
+  <thead>
+    <tr>
+      <th>Imię i nazwisko</th>
+      <th>Adres e-mail</th>
+    </tr>
+  </thead>
+
+ <tbody>
+   <% @doctors.each do |doctor| %>
+     <tr>
+      <td><%= doctor.name %></td>
+      <td><%= doctor.email %></td>
+    </tr>
+   <% end %>
+ </tbody>
