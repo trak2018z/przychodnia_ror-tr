@@ -8,6 +8,7 @@ pl:
               blank: "jest wymagany"
             password:
               blank: "jest wymagane"
+              too_short: "jest za krótkie (należy użyć co najmniej 6 znaków)"
             password_confirmation:
               confirmation: "inne niż hasło"
             name:
@@ -22,7 +23,7 @@ pl:
             address:
               blank: "jest wymagany"
             current_password:
-              blank: "jest wymagane"
+              blank: "jest wymagane do wprowadzenia zmian"
         doctor:
           attributes:
             email:
