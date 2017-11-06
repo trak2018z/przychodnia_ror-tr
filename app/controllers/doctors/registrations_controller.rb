@@ -1,15 +1,14 @@
 class Doctors::RegistrationsController < Devise::RegistrationsController
-  before_action :authenticate_doctor!, :except => [:create, :new]
-  before_action :check_admin, only: [:create, :new]
-  skip_before_action :require_no_authentication, only: [:create, :new]
+  before_action :check_admin, only: [:create, :new] # tylko administrator może tworzyć konta lekarzy
+  skip_before_action :require_no_authentication, only: [:create, :new] # umożliwienie tworzenie konta będąc zalogowanym (jako administrator)
   # prepend_before_action :require_no_authentication, only: [:new, :create, :cancel]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  def new
-    super
-  end
+  # def new
+  #  super
+  # end
 
   # POST /resource
   def create
