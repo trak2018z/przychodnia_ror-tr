@@ -11,13 +11,13 @@ class Doctors::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  def create
-    build_resource(sign_up_params)
+  def create # metoda tworząca konto lekarza
+    build_resource(sign_up_params) # przygotowanie do zapisu na podstawie danych z formularza
     if resource.save
-      set_flash_message! :notice, :signed_up
-      redirect_to root_path
+      set_flash_message! :notice, :signed_up # ustawienie informacji o powodzeniu rejestracji
+      redirect_to root_path # przekierowanie na stronę główną
     else
-      clean_up_passwords resource
+      clean_up_passwords resource # wyczyszczenie pól z hasłami
       set_minimum_password_length
       respond_with resource
     end

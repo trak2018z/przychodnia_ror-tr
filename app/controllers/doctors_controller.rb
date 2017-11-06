@@ -1,8 +1,7 @@
 class DoctorsController < ApplicationController
-  before_action :check_admin, only: [:index]
+  before_action :check_admin, only: [:index] # tylko administrator może przeglądać listę lekarzy
 
   def index
-    #@doctors = Doctor.all
     @doctors = Doctor.where(:admin => false)
   end
 

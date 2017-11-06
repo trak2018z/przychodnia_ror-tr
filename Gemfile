@@ -24,7 +24,7 @@ gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
 gem 'devise-bootstrap-views'
 
-# gem 'bcrypt', platforms: :ruby
+# Gem BCrypt w wersji z github.com
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
 
 # Use jquery as the JavaScript library

@@ -28,7 +28,7 @@
             <%= f.text_field :address, class: 'form-control' %>
           </div>
           <div class="form-group">
-            <%= f.label :password %> <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it', default: "leave blank if you don't want to change it") %>)</i>
+            <%= f.label :password %> <i> (min. 6 znaków) (<%= t('.leave_blank_if_you_don_t_want_to_change_it', default: "leave blank if you don't want to change it") %>)</i>
             <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
           </div>
           <div class="form-group">

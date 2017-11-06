@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :patients
+  devise_for :patients # adresy Devise dla pacjentów
   devise_for :doctors, :class_name => 'Doctor', :controllers => {:registrations => "doctors/registrations"} do
-    get   "doctor/sign_up" => "doctor/registrations#new", :as => :new_doctor_registration
+    get   "doctor/sign_up" => "doctor/registrations#new", :as => :new_doctor_registration # obsługa rejestracji kont lekarzy przez odpowiedni kontroler
   end
-  #devise_for :doctors, path: 'doctors', controllers: { registrations: "doctors/registrations", sessions: "doctors/sessions" }
-  get 'static_pages/home'
-  get 'static_pages/about'
-  root 'static_pages#home'
-  resources :doctors, only: [:index]
+  resources :doctors, only: [:index] # adres listy lekarzy
+
+  get 'static_pages/home' # adres strony głównej
+  get 'static_pages/about' # adres strony o przychodni
+  root 'static_pages#home' # ustalenie strony głównej
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
