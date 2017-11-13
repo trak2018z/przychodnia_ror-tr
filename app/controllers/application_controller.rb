@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters # dopuszczanie dozwolonych parametrów dla kontrolerów typu Devise
-    list_keys = [:name, :age, :pesel, :phone, :address, :email, :password, :password_confirmation]
+    list_keys = [:name, :age, :pesel, :phone, :address, :email, :password, :password_confirmation, specialization_ids: []]
     devise_parameter_sanitizer.permit(:sign_up, keys: list_keys) # parametry dla rejestracji
     devise_parameter_sanitizer.permit(:account_update, keys: list_keys) # parametry dla edycji danych konta
   end

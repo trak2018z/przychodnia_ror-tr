@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030191328) do
+ActiveRecord::Schema.define(version: 20171113120402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20171030191328) do
     t.index ["reset_password_token"], name: "index_doctors_on_reset_password_token", unique: true
   end
 
+  create_table "doctors_specializations", id: false, force: :cascade do |t|
+    t.bigint "doctor_id"
+    t.bigint "specialization_id"
+    t.index ["doctor_id"], name: "index_doctors_specializations_on_doctor_id"
+    t.index ["specialization_id"], name: "index_doctors_specializations_on_specialization_id"
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -55,6 +62,12 @@ ActiveRecord::Schema.define(version: 20171030191328) do
     t.string "address", null: false
     t.index ["email"], name: "index_patients_on_email", unique: true
     t.index ["reset_password_token"], name: "index_patients_on_reset_password_token", unique: true
+  end
+
+  create_table "specializations", force: :cascade do |t|
+    t.string "appellation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

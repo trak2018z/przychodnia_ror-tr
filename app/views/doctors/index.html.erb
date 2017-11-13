@@ -8,6 +8,7 @@
             <th>Imię i nazwisko</th>
             <th>Adres e-mail</th>
             <th>Numer telefonu</th>
+            <th>Specjalizacje</th>
           </tr>
         </thead>
         <tbody>
@@ -16,6 +17,9 @@
               <td><%= doctor.name %></td>
               <td><%= doctor.email %></td>
               <td><%= doctor.phone %></td>
+              <td><% doctor.specializations.each do |s| %>
+                    <%= s.appellation %><br>
+                  <% end %>
             </tr>
           <% end %>
         </tbody>

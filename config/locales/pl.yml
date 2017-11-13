@@ -71,6 +71,7 @@ pl:
         unlock_token:
         updated_at:
       doctor:
+        specializations: Specjalizacje
         name: Imię i nazwisko
         phone: Telefon
         confirmation_sent_at:
