@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4> Edycja godzin pracy: </h4>
+      </div>
+      <div class="panel-body">
+        <%= form_tag update_doctor_worktimes_path, method: :put do %>
+        <div class="table-responsive">
+          <table class="table">
+            <% @worktimes.each do |worktime| %>
+                <%= fields_for "worktimes[]", worktime do |f| %>
+                  <td>
+                    <%= worktime.weekday %>
+                    <div class="field">
+                      <%= f.time_field :start_time, value: "09:00" %>
+                    </div>
+                    <div class="field">
+                      <%= f.time_field :end_time, value: "17:00" %>
+                    </div>
+                  </td>
+                <% end %>
+              <% end %>
+          </table>
+        </div>
+        <div class="actions">
+          <%= submit_tag "Zmień godziny pracy", class: 'btn btn-primary' %>
+        </div>
+         <% end %>
+        </div>
+      </div>
+    </div>
+  <div class="col-sm-6"></div>
+</div>

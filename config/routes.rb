@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
   devise_for :patients # adresy Devise dla pacjentów
   devise_for :doctors, :class_name => 'Doctor', :controllers => {:registrations => "doctors/registrations"} do
-    get   "doctor/sign_up" => "doctor/registrations#new", :as => :new_doctor_registration # obsługa rejestracji kont lekarzy przez odpowiedni kontroler
+    get "doctor/sign_up" => "doctor/registrations#new", :as => :new_doctor_registration # obsługa rejestracji kont lekarzy przez odpowiedni kontroler
   end
-  resources :doctors, only: [:index] # adres listy lekarzy
+  resources :doctors, only: [:index] do# adres listy lekarzy
+    resources :worktimes, only: [] do
+      collection do
+        post 'edit' => 'worktimes#edit'
+        put 'update' => 'worktimes#update', :as => 'update'
+        get '' => 'worktimes#index', :as => ''
+      end
+    end
+  end
 
   get 'static_pages/home' # adres strony głównej
   get 'static_pages/about' # adres strony o przychodni
