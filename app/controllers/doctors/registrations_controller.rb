@@ -12,14 +12,22 @@ class Doctors::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create # metoda tworząca konto lekarza
-    build_resource(sign_up_params) # przygotowanie do zapisu na podstawie danych z formularza
-    if resource.save
-      set_flash_message! :notice, :signed_up # ustawienie informacji o powodzeniu rejestracji
-      redirect_to root_path # przekierowanie na stronę główną
-    else
-      clean_up_passwords resource # wyczyszczenie pól z hasłami
-      set_minimum_password_length
-      respond_with resource
+    Doctor.transaction do
+      build_resource(sign_up_params) # przygotowanie do zapisu na podstawie danych z formularza
+      if resource.save
+        set_flash_message! :notice, :signed_up # ustawienie informacji o powodzeniu rejestracji
+        redirect_to root_path # przekierowanie na stronę główną
+      else
+        clean_up_passwords resource # wyczyszczenie pól z hasłami
+        set_minimum_password_length
+        respond_with resource
+        raise ActiveRecord::Rollback
+      end
+      Worktime.create!(weekday:"poniedziałek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
+      Worktime.create!(weekday:"wtorek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
+      Worktime.create!(weekday:"środa", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
+      Worktime.create!(weekday:"czwartek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
+      Worktime.create!(weekday:"piątek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
     end
   end
 
