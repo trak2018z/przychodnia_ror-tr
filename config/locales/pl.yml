@@ -190,7 +190,7 @@ pl:
     registrations:
       destroyed: Konto zostało usunięte.
       edit:
-        are_you_sure: Jesteś pewny?
+        are_you_sure: Jesteś pewny(a)?
         cancel_my_account: Anuluj moje konto
         currently_waiting_confirmation_for_email: 'Aktualnie oczekujemy na potwierdzenie z: %{email}'
         leave_blank_if_you_don_t_want_to_change_it: pozostaw puste, jeśli nie chcesz wprowadzać zmian
@@ -288,7 +288,7 @@ pl:
     registrations:
       destroyed: Konto zostało usunięte.
       edit:
-        are_you_sure: Jesteś pewny?
+        are_you_sure: Jesteś pewny(a)?
         cancel_my_account: Anuluj moje konto
         currently_waiting_confirmation_for_email: 'Aktualnie oczekujemy na potwierdzenie z: %{email}'
         leave_blank_if_you_don_t_want_to_change_it: pozostaw puste, jeśli nie chcesz wprowadzać zmian
@@ -386,7 +386,7 @@ pl:
     registrations:
       destroyed: Konto zostało usunięte.
       edit:
-        are_you_sure: Jesteś pewny?
+        are_you_sure: Jesteś pewny(a)?
         cancel_my_account: Anuluj moje konto
         currently_waiting_confirmation_for_email: 'Aktualnie oczekujemy na potwierdzenie z: %{email}'
         leave_blank_if_you_don_t_want_to_change_it: pozostaw puste, jeśli nie chcesz wprowadzać zmian

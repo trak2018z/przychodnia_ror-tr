@@ -1,16 +1,12 @@
-<p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Visit date:</strong>
-  <%= @visit.visit_date %>
+  <strong>Data wizyty:</strong>
+  <%= @visit.visit_date.strftime("%d/%m/%Y %H:%M") %>
 </p>
-
 <p>
-  <strong>Patient:</strong>
-  <%= @visit.patient_id %>
+  <strong>Pacjent:</strong>
+  <%= Patient.find(@visit.patient_id).name %>
 </p>
-
 <p>
-  <strong>Doctor:</strong>
-  <%= @visit.doctor_id %>
+  <strong>Lekarz:</strong>
+  <%= Doctor.find(@visit.doctor_id).name %>
 </p>

@@ -1,28 +1,40 @@
-<h1>Visits</h1>
+<div class="row">
+  <div class="panel panel-default devise-bs">
+    <div class="panel-heading"><h4>Zaplanowane wizyty</h4></div>
+    <div class="panel-body">
+      <div class="table-responsive">
+      <% if @visits.nil? %>
+        <%= link_to new_patient_session_path do %>Zaloguj się<% end %>, aby zobaczyć listę umówionych wizyt lub zarejestrować nową.
+          <% else %>
+          <table class=" table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Data wizyty</th>
+                <th>Pacjent</th>
+                <th>Lekarz</th>
+                <th>Specjalizacje</th>
+              </tr>
+            </thead>
 
-<table class = "table">
-  <thead>
-    <tr>
-      <th>Data wizyty</th>
-      <th>Pacjent</th>
-      <th>Lekarz</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @visits.each do |visit| %>
-      <tr>
-        <td><%= visit.visit_date.strftime("%d/%m/%Y %H:%M") %></td>
-        <td><%= visit.patient.name %></td>
-        <td><%= visit.doctor.name %></td>
-        <td><%= link_to 'Show', visit %></td>
-        <td><%= link_to 'Destroy', visit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+            <tbody>
+              <% @visits.each do |visit| %>
+              <tr>
+                <td><%= visit.visit_date.strftime("%d/%m/%Y %H:%M") %></td>
+                <td><%= visit.patient.name %></td>
+                <td><%= visit.doctor.name %></td>
+                <td><% visit.doctor.specializations.each do |s| %>
+                  <%= s.appellation %><br>
+                  <% end %></td>
+                  <%# link_to 'Szczegóły', visit %>
+                  <td><%= link_to 'Odwołaj wizytę', visit, method: :delete, data: { confirm: 'Czy na pewno chcesz anulować wizytę?' } %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <br>
+            <%= link_to 'Zarejestruj nową wizytę wizytę', doctors_path %>
+          </div>
+        </div>
+      </div>
+    </div>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Visit', new_visit_path %>
