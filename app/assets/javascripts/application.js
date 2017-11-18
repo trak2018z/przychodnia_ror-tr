@@ -13,4 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require turbolinks
+//= require moment
+//= require moment/pl
+//= require bootstrap-datetimepicker
+
+$(function () {
+  $('#datetimepicker1').datetimepicker({
+    locale: 'pl',
+    daysOfWeekDisabled: [0, 6]
+  });
+});

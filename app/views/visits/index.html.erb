@@ -1,0 +1,28 @@
+<h1>Visits</h1>
+
+<table class = "table">
+  <thead>
+    <tr>
+      <th>Data wizyty</th>
+      <th>Pacjent</th>
+      <th>Lekarz</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @visits.each do |visit| %>
+      <tr>
+        <td><%= visit.visit_date.strftime("%d/%m/%Y %H:%M") %></td>
+        <td><%= visit.patient.name %></td>
+        <td><%= visit.doctor.name %></td>
+        <td><%= link_to 'Show', visit %></td>
+        <td><%= link_to 'Destroy', visit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Visit', new_visit_path %>

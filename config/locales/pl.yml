@@ -1,7 +1,31 @@
 pl:
+  #visits:
+  #  visit_date: "data wizyty"
+  #date:
+  #  order: [ !ruby/symbol day, !ruby/symbol month, !ruby/symbol year ]
+  #  formats:
+  #    default: "%Y-%m-%d"
+  #    short: "%b %d"
+  #    long: "%B %d, %Y"
+  #  day_names: [Poniedziałek, Wtorek, Środa, Czwartek, Piątek, Sobota, Niedziela]
+  #  abbr_day_names: [Pon, Wt, Śr, Czw, Pi, So, Nie]
+  #  month_names: [~, Styczeń, Luty, Marzec, Kwiecień, Maj, Czerwiec, Lipiec, Sierpień, Wrzesień, Październik, Listopad, Grudzień]
+  #  abbr_month_names: [~, St, Lu, Ma, Kw, Ma, Cz, Li, Si, Wr, Pa, Li, Gr]
   activerecord:
     errors:
       models:
+        visit:
+          attributes:
+            patient:
+              required: "Nie ma takiego pacjenta"
+            doctor:
+              required: "Nie ma takiego lekarza"
+            visit_date:
+              blank: "Data wizyty jest wymagana"
+            patient_id:
+              blank: "ID pacjenta jest wymagane"
+            doctor_id:
+              blank: "ID lekarza jest wymagane"
         patient:
           attributes:
             email:
@@ -41,6 +65,11 @@ pl:
             current_password:
               blank: "jest wymagane"
     attributes:
+      visit:
+        visit_date: Data wizyty
+        refunded: Czy refundowana
+        patient_id: ID pacjenta
+        doctor_id: ID lekarza
       patient:
         name: Imię i nazwisko
         age: Wiek
@@ -98,8 +127,9 @@ pl:
         unlock_token:
         updated_at:
     models:
-      patient: Pacjent
+      patient: "Pacjent"
       doctor: Lekarz
+      visit: Wizyta
   devise:
     confirmations:
       confirmed: Konto zostało poprawnie aktywowane.

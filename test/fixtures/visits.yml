@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  visit_date: 2017-11-18 11:04:48
+  refunded: false
+  patient_id: 
+  doctor_id: 
+
+two:
+  visit_date: 2017-11-18 11:04:48
+  refunded: false
+  patient_id: 
+  doctor_id: 
