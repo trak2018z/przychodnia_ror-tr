@@ -18,6 +18,7 @@ class WorktimesController < ApplicationController
     if @worktimes.empty?
       redirect_to :action => "index"
     else
+      flash[:notice] = "Proszę poprawić błędne godziny pracy"
       render "edit"
     end
   end

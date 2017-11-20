@@ -14,10 +14,18 @@
                   <td>
                     <%= worktime.weekday %>
                     <div class="field">
-                      <%= f.time_field :start_time, value: worktime.start_time.strftime("%H:%M")%>
+                      <% if worktime.start_time.nil? %>
+                        <%= f.time_field :start_time, value: "09:00"%>
+                      <% else %>
+                        <%= f.time_field :start_time, value: worktime.start_time.strftime("%H:%M")%>
+                      <% end %>
                     </div>
                     <div class="field">
-                      <%= f.time_field :end_time, value: worktime.end_time.strftime("%H:%M") %>
+                      <% if worktime.end_time.nil? %>
+                        <%= f.time_field :end_time, value: "17:00"%>
+                      <% else %>
+                        <%= f.time_field :end_time, value: worktime.end_time.strftime("%H:%M") %>
+                      <% end %>
                     </div>
                   </td>
                 <% end %>
