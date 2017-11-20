@@ -21,12 +21,14 @@ $(document).on('ready page:change', function() {
   var hours = $('#hours').data('hours');
 
   $(function () {
-      $('#datetimepicker1').datetimepicker({
+      $('#visit_date_time_picker').datetimepicker({
       locale: 'pl',
       daysOfWeekDisabled: [0, 6],
       showClose: true,
       minDate: moment(),
-      collapse: false,
+      inline: true,
+      focusOnShow: false,
+      sideBySide: true,
       disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 18, m: 30 }), moment({ h: 24 })]],
       enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
       stepping: 30

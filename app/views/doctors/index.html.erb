@@ -22,7 +22,7 @@
                 <%= s.appellation %><br>
               <% end %>
               <% if patient_signed_in? %>
-                <td> ZAREJESTRUJ WIZYTĘ </td>
+                <td> <%= link_to "Zarejestruj wizytę", new_visit_path(:doctor_id => doctor.id) %> </td>
               <% end %>
               </tr>
               <% end %>
