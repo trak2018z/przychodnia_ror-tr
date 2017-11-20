@@ -8,19 +8,21 @@
         <%= form_tag update_doctor_worktimes_path, method: :put do %>
         <div class="table-responsive">
           <table class="table">
+            <tr>
             <% @worktimes.each do |worktime| %>
                 <%= fields_for "worktimes[]", worktime do |f| %>
                   <td>
                     <%= worktime.weekday %>
                     <div class="field">
-                      <%= f.time_field :start_time, value: "09:00" %>
+                      <%= f.time_field :start_time, value: worktime.start_time.strftime("%H:%M")%>
                     </div>
                     <div class="field">
-                      <%= f.time_field :end_time, value: "17:00" %>
+                      <%= f.time_field :end_time, value: worktime.end_time.strftime("%H:%M") %>
                     </div>
                   </td>
                 <% end %>
               <% end %>
+            </tr>
           </table>
         </div>
         <div class="actions">

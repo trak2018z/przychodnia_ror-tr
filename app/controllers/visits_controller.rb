@@ -20,6 +20,9 @@ class VisitsController < ApplicationController
   # GET /visits/1
   # GET /visits/1.json
   def show
+    if @visit.patient_id!=current_patient.id
+      then redirect_to root_path
+    end
   end
 
   # GET /visits/new
@@ -67,10 +70,14 @@ class VisitsController < ApplicationController
   # DELETE /visits/1
   # DELETE /visits/1.json
   def destroy
-    @visit.destroy
-    respond_to do |format|
-      format.html { redirect_to visits_url, notice: 'Wizyta została anulowana.' }
-      format.json { head :no_content }
+    if @visit.patient_id!=current_patient.id
+      then redirect_to root_path
+    else
+      @visit.destroy
+      respond_to do |format|
+        format.html { redirect_to visits_url, notice: 'Wizyta została anulowana.' }
+        format.json { head :no_content }
+      end
     end
   end
 

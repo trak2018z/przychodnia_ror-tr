@@ -23,11 +23,9 @@ class Doctors::RegistrationsController < Devise::RegistrationsController
         respond_with resource
         raise ActiveRecord::Rollback
       end
-      Worktime.create!(weekday:"poniedziałek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
-      Worktime.create!(weekday:"wtorek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
-      Worktime.create!(weekday:"środa", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
-      Worktime.create!(weekday:"czwartek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
-      Worktime.create!(weekday:"piątek", start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
+      Worktime::VALID_WEEKDAYS.each do |w| # utworzenie domyślnych godzin pracy nowego lekarza
+        Worktime.create!(weekday: w, start_time: "09:00", end_time: "17:00", doctor_id: resource.id)
+      end
     end
   end
 

@@ -8,9 +8,8 @@
 
 # utworzenie administratora, w środowisku produkcyjnym zmienić hasło
 # Doctor.create(:email => 'admin@admin.pl', :password => 'aaddmmiinn', :password_confirmation => 'aaddmmiinn', :name => 'Administrator', :phone => '101-010-101', :admin => true)
-Specialization.create(appellation:'alergologia')
-Specialization.create(appellation:'diabetologia')
-Specialization.create(appellation:'geriatria')
-Specialization.create(appellation:'hematologia')
-Specialization.create(appellation:'kardiologia')
-Specialization.create(appellation:'medycyna pracy')
+# utworzenie listy specjalizacji
+specjalizacje = ['alergologia', 'diabetologia', 'geriatria', 'hematologia', 'kardiologia', 'medycyna pracy']
+specjalizacje.each do |s|
+  Specialization.create(appellation: s)
+end
