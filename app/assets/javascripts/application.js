@@ -17,6 +17,10 @@
 //= require moment/pl
 //= require bootstrap-datetimepicker
 
+$( document ).ready(function() {
+  $('.selectpicker').selectpicker();
+});
+
 $(document).on('ready page:change', function() {
   var hours = $('#hours').data('hours');
 
