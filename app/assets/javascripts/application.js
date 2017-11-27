@@ -22,20 +22,48 @@ $( document ).ready(function() {
 });
 
 $(document).on('ready page:change', function() {
-  var hours = $('#hours').data('hours');
+  var tStart = times.dataset.startTimes.substring(1,times.dataset.startTimes.length-1).split(",");
+  var tEnd = times.dataset.endTimes.substring(1,times.dataset.endTimes.length-1).split(",");
+  var its_now = moment()
+  var d = its_now.day()
+  var start_time = parseInt(tStart[d-1])
+  var end_time = parseInt(tEnd[d-1])
+  var workTimes = []
+  for (i = 0; i < 24; i++) {
+    if (i>=start_time && i<end_time) {
+      workTimes[i] = i;
+    }
+  }
 
   $(function () {
       $('#visit_date_time_picker').datetimepicker({
       locale: 'pl',
       daysOfWeekDisabled: [0, 6],
       showClose: true,
-      minDate: moment(),
+      minDate: its_now,
+      keepOpen: true,
       inline: true,
       focusOnShow: false,
-      sideBySide: true,
-      disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 18, m: 30 }), moment({ h: 24 })]],
-      enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-      stepping: 30
+      sideBySide: false,
+      showClose: true,
+      showClear: true,
+      useStrict: true,
+      enabledHours: workTimes,
+      //disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 8 })], [moment({ h: 18 }), moment({ h: 24 })]],
+      stepping: 60,
+      allowInputToggle: true
+    });
+    $("#visit_date_time_picker").on("dp.change", function (e) {
+      var d = e.date.day();
+      var start_time = parseInt(tStart[d-1])
+      var end_time = parseInt(tEnd[d-1])
+      var workTimes = []
+      for (i = 0; i < 24; i++) {
+        if (i>=start_time && i<end_time) {
+          workTimes[i] = i;
+        }
+      }
+      $('#visit_date_time_picker').data('DateTimePicker').enabledHours(workTimes);
     });
   });
 });

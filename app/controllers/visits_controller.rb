@@ -32,6 +32,10 @@ class VisitsController < ApplicationController
   def new
     @visit = Visit.new
     @doctor = Doctor.find(params[:doctor_id])
+    @start_times = []
+    @end_times = []
+    @doctor.worktimes.each do |w| @start_times << w.start_time.strftime("%H").to_i end
+    @doctor.worktimes.each do |w| @end_times << w.end_time.strftime("%H").to_i end
   end
 
   # GET /visits/1/edit
@@ -50,7 +54,7 @@ class VisitsController < ApplicationController
         format.html { redirect_to visits_path, notice: 'Wizyta została zarejestrowana.' }
         format.json { render :show, status: :created, location: @visit }
       else
-        format.html { render :new }
+        format.html { redirect_to visits_path, notice: 'Błędna data. Spróbuj ponownie.' }
         format.json { render json: @visit.errors, status: :unprocessable_entity }
       end
     end

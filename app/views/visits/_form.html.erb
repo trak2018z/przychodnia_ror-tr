@@ -1,7 +1,7 @@
 <%= form_with(model: visit, local: true) do |form| %>
 <%= errors_for(@visit) %>
 
-<%= content_tag "div", id: "hours", data: {hours: @doctor.worktimes} do %><% end %>
+<%= content_tag "div", id: "times", data: { start_times: @start_times, end_times: @end_times } do %><% end %>
 
 <%= form.label :visit_date %>
 <div class="form-group">
