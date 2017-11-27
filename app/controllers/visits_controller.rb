@@ -6,13 +6,16 @@ class VisitsController < ApplicationController
   # GET /visits.json
   def index
     if patient_signed_in?
-      @visits = Visit.where(patient_id: current_patient.id)
+      @past_visits = Visit.where(patient_id: current_patient.id).where('visit_date < ?', DateTime.now)
+      @future_visits = Visit.where(patient_id: current_patient.id).where('visit_date > ?', DateTime.now)
     end
     if doctor_signed_in?
       if current_doctor.admin?
-        @visits = Visit.all
+        @past_visits = Visit.all.where('visit_date < ?', DateTime.now)
+        @future_visits = Visit.all.where('visit_date > ?', DateTime.now)
       else
-        @visits = Visit.where(doctor_id: current_doctor.id)
+        @past_visits = Visit.where(doctor_id: current_doctor.id).where('visit_date < ?', DateTime.now)
+        @future_visits = Visit.where(doctor_id: current_doctor.id).where('visit_date > ?', DateTime.now)
       end
     end
   end

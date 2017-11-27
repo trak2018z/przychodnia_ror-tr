@@ -18,7 +18,7 @@
 //= require bootstrap-datetimepicker
 
 $( document ).ready(function() {
-  $('.selectpicker').selectpicker();
+  $('.selectpicker').selectpicker({size: 5});
 });
 
 $(document).on('ready page:change', function() {

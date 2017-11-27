@@ -1,53 +1,105 @@
 <div class="row">
   <div class="col-sm-6">
-    <div class="panel panel-default devise-bs">
-      <div class="panel-heading"><h4>Zaplanowane wizyty</h4></div>
-      <div class="panel-body">
-        <div class="table-responsive">
-        <% if @visits.nil? %>
-          <%= link_to new_patient_session_path do %>Zaloguj się<% end %>, aby zobaczyć listę umówionych wizyt lub zarejestrować nową.
-            <% else %>
-            <table class=" table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>Data wizyty</th>
-                  <% if doctor_signed_in? %>
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="pill" href="#future">Umówione wizyty</a></li>
+      <li><a data-toggle="pill" href="#past">Minione wizyty</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="future" class="tab-pane fade in active">
+        <div class="panel panel-default devise-bs">
+          <div class="panel-heading"><h4>Zaplanowane wizyty</h4></div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <% if @future_visits.nil? %>
+              <%= link_to new_patient_session_path do %>Zaloguj się<% end %>, aby zobaczyć listę umówionych wizyt lub zarejestrować nową.
+              <% else %>
+              <table class=" table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Data wizyty</th>
+                    <% if doctor_signed_in? %>
                     <th>Pacjent</th>
-                  <% end %>
-                  <% if patient_signed_in? || (doctor_signed_in? && current_doctor.admin?)%>
+                    <% end %>
+                    <% if patient_signed_in? || (doctor_signed_in? && current_doctor.admin?)%>
                     <th>Lekarz</th>
                     <th>Specjalizacje</th>
                     <th>Anulowanie</th>
-                  <% end %>
-                </tr>
-              </thead>
+                    <% end %>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <% @visits.each do |visit| %>
-                <tr>
-                  <td><%= visit.visit_date.strftime("%d/%m/%Y %H:%M") %></td>
-                  <% if doctor_signed_in? %>
+                <tbody>
+                  <% @future_visits.each do |visit| %>
+                  <tr>
+                    <td><%= visit.visit_date.strftime("%d/%m/%Y %H:%M") %></td>
+                    <% if doctor_signed_in? %>
                     <td><%= visit.patient.name %></td>
-                  <% end %>
-                  <% if patient_signed_in? || (doctor_signed_in? && current_doctor.admin?) %>
+                    <% end %>
+                    <% if patient_signed_in? || (doctor_signed_in? && current_doctor.admin?) %>
                     <td><%= visit.doctor.name %></td>
                     <td><% visit.doctor.specializations.each do |s| %>
                       <%= s.appellation %><br>
                       <% end %></td>
                       <%# link_to 'Szczegóły', visit %>
                       <td><%= link_to 'Odwołaj wizytę', visit, class: 'btn btn-sm btn-warning', method: :delete, data: { confirm: 'Czy na pewno chcesz anulować wizytę?' } %></td>
-                  <% end %>
-                  </tr>
-                  <% end %>
-                </tbody>
-              </table>
-              <br>
-              <% if !doctor_signed_in? %>
+                      <% end %>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+                <br>
+                <% if !doctor_signed_in? %>
                 <%= link_to 'Zarejestruj nową wizytę', doctors_path, class: 'btn btn-primary' %>
-              <% end %>
+                <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="past" class="tab-pane fade">
+          <div class="panel panel-default devise-bs">
+            <div class="panel-heading"><h4>Historia wizyt</h4></div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <% if @past_visits.nil? %>
+                <%= link_to new_patient_session_path do %>Zaloguj się<% end %>, aby zobaczyć listę umówionych wizyt lub zarejestrować nową.
+                <% else %>
+                <table class=" table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>Data wizyty</th>
+                      <% if doctor_signed_in? %>
+                      <th>Pacjent</th>
+                      <% end %>
+                      <% if patient_signed_in? || (doctor_signed_in? && current_doctor.admin?)%>
+                      <th>Lekarz</th>
+                      <th>Specjalizacje</th>
+                      <% end %>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @past_visits.each do |visit| %>
+                    <tr>
+                      <td><%= visit.visit_date.strftime("%d/%m/%Y %H:%M") %></td>
+                      <% if doctor_signed_in? %>
+                      <td><%= visit.patient.name %></td>
+                      <% end %>
+                      <% if patient_signed_in? || (doctor_signed_in? && current_doctor.admin?) %>
+                      <td><%= visit.doctor.name %></td>
+                      <td><% visit.doctor.specializations.each do |s| %>
+                        <%= s.appellation %><br>
+                        <% end %></td>
+                        <%# link_to 'Szczegóły', visit %>
+                        <% end %>
+                      </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <% end %>
