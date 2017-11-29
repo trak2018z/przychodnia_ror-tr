@@ -2,14 +2,6 @@ class VisitsController < ApplicationController
   # before_action :set_visit, only: [:show, :edit, :update, :destroy]
   before_action :set_visit, only: [:show, :destroy]
   before_action :authenticate_patient!, only: [:new, :create, :destroy]
-  # GET /visits
-  # GET /visits.json
-  # def reserved_datetimes
-  #   @visits = Visit.all
-  #   respond_to do |format|
-  #     format.js
-  #   end
-  # end
 
   def index
     if request.xhr?
@@ -63,12 +55,24 @@ class VisitsController < ApplicationController
     @visit = Visit.new(visit_params)
     @visit.doctor_id = params[:doctor_id]
     @visit.patient_id = current_patient.id
+    visit_date = @visit.visit_date
+    day_of_week = visit_date.wday # nazwa dnia tygodnia
+    the_day_worktime = Worktime.where(doctor_id:params[:doctor_id]).where(weekday: Worktime::VALID_WEEKDAYS[day_of_week-1]).first
 
-    respond_to do |format|
-      if @visit.save
-        format.html { redirect_to visits_path, :flash => { :success => 'Wizyta została zarejestrowana.' }}
-        format.json { render :show, status: :created, location: @visit }
-      else
+    # walidacja zgodności z czasem pracy
+    if visit_date.strftime("%HH") >= the_day_worktime.start_time.strftime("%HH") && visit_date.strftime("%HH") < the_day_worktime.end_time.strftime("%HH")
+      puts "TAK"
+      respond_to do |format|
+        if @visit.save
+          format.html { redirect_to visits_path, :flash => { :success => 'Wizyta została zarejestrowana.' }}
+          format.json { render :show, status: :created, location: @visit }
+        else
+          format.html { redirect_to visits_path, :flash => { :error => 'Błędna data. Spróbuj ponownie.' }}
+          format.json { render json: @visit.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
         format.html { redirect_to visits_path, :flash => { :error => 'Błędna data. Spróbuj ponownie.' }}
         format.json { render json: @visit.errors, status: :unprocessable_entity }
       end
