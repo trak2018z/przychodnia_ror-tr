@@ -4,18 +4,31 @@ class VisitsController < ApplicationController
   before_action :authenticate_patient!, only: [:new, :create, :destroy]
   # GET /visits
   # GET /visits.json
+  # def reserved_datetimes
+  #   @visits = Visit.all
+  #   respond_to do |format|
+  #     format.js
+  #   end
+  # end
+
   def index
-    if patient_signed_in?
-      @past_visits = Visit.where(patient_id: current_patient.id).where('visit_date < ?', DateTime.now)
-      @future_visits = Visit.where(patient_id: current_patient.id).where('visit_date > ?', DateTime.now)
-    end
-    if doctor_signed_in?
-      if current_doctor.admin?
-        @past_visits = Visit.all.where('visit_date < ?', DateTime.now)
-        @future_visits = Visit.all.where('visit_date > ?', DateTime.now)
-      else
-        @past_visits = Visit.where(doctor_id: current_doctor.id).where('visit_date < ?', DateTime.now)
-        @future_visits = Visit.where(doctor_id: current_doctor.id).where('visit_date > ?', DateTime.now)
+    if request.xhr?
+      doctor = ActiveSupport::JSON.decode(CGI.unescapeHTML(params[:doctor_id]))
+      visit_date = CGI.unescapeHTML(params[:visit_date]).to_date
+      @visits = Visit.where(doctor_id: doctor).where('DATE(visit_date) = ?', visit_date)
+    else
+      if patient_signed_in?
+        @past_visits = Visit.where(patient_id: current_patient.id).where('visit_date < ?', DateTime.now)
+        @future_visits = Visit.where(patient_id: current_patient.id).where('visit_date > ?', DateTime.now)
+      end
+      if doctor_signed_in?
+        if current_doctor.admin?
+          @past_visits = Visit.all.where('visit_date < ?', DateTime.now)
+          @future_visits = Visit.all.where('visit_date > ?', DateTime.now)
+        else
+          @past_visits = Visit.where(doctor_id: current_doctor.id).where('visit_date < ?', DateTime.now)
+          @future_visits = Visit.where(doctor_id: current_doctor.id).where('visit_date > ?', DateTime.now)
+        end
       end
     end
   end
@@ -32,6 +45,8 @@ class VisitsController < ApplicationController
   def new
     @visit = Visit.new
     @doctor = Doctor.find(params[:doctor_id])
+    @appointments = []
+    @doctor.visits.each do |a| @appointments << a.visit_date.strftime("%Y-%m-%d %H:%M") end
     @start_times = []
     @end_times = []
     @doctor.worktimes.each do |w| @start_times << w.start_time.strftime("%H").to_i end
@@ -51,10 +66,10 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.save
-        format.html { redirect_to visits_path, notice: 'Wizyta została zarejestrowana.' }
+        format.html { redirect_to visits_path, :flash => { :success => 'Wizyta została zarejestrowana.' }}
         format.json { render :show, status: :created, location: @visit }
       else
-        format.html { redirect_to visits_path, notice: 'Błędna data. Spróbuj ponownie.' }
+        format.html { redirect_to visits_path, :flash => { :error => 'Błędna data. Spróbuj ponownie.' }}
         format.json { render json: @visit.errors, status: :unprocessable_entity }
       end
     end

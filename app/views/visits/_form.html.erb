@@ -2,6 +2,7 @@
 <%= errors_for(@visit) %>
 
 <%= content_tag "div", id: "times", data: { start_times: @start_times, end_times: @end_times } do %><% end %>
+<%= content_tag "div", id: "reserved", data: { dates: @visits } do %><% end %>
 
 <%= form.label :visit_date %>
 <div class="form-group">

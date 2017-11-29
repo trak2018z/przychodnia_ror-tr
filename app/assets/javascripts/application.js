@@ -16,6 +16,26 @@
 //= require moment
 //= require moment/pl
 //= require bootstrap-datetimepicker
+//= require_tree .
+
+$(document).ready(function(){
+  $(".przycisk").click(function(){
+
+    // var items = [];
+    // $.each( result, function() {
+    //   items.push( result.visit_date );
+    // });
+    // alert(result[0].visit_date)
+
+    // alert(JSON.stringify(result));
+    // $.each( result, function( key, val ) {
+    //   items.push( key + ":" + val );
+    // });
+    // alert(items[0])
+    // var obj = jQuery.parseJSON( result );
+    // alert( obj );
+  });
+});
 
 $( document ).ready(function() {
   $('.selectpicker').selectpicker({size: 5});
@@ -25,45 +45,52 @@ $(document).on('ready page:change', function() {
   var tStart = times.dataset.startTimes.substring(1,times.dataset.startTimes.length-1).split(",");
   var tEnd = times.dataset.endTimes.substring(1,times.dataset.endTimes.length-1).split(",");
   var its_now = moment()
-  var d = its_now.day()
-  var start_time = parseInt(tStart[d-1])
-  var end_time = parseInt(tEnd[d-1])
-  var workTimes = []
-  for (i = 0; i < 24; i++) {
-    if (i>=start_time && i<end_time) {
-      workTimes[i] = i;
-    }
-  }
 
   $(function () {
-      $('#visit_date_time_picker').datetimepicker({
+    $('#visit_date_time_picker').datetimepicker({
       locale: 'pl',
+      format: "DD/MM/YYYY, HH[:00]",
       daysOfWeekDisabled: [0, 6],
       showClose: true,
+      useCurrent: false,
       minDate: its_now,
-      keepOpen: true,
+      keepOpen: false,
+      keepInvalid: true,
+      collapse: true,
       inline: true,
+      allowInputToggle: true,
       focusOnShow: false,
       sideBySide: false,
-      showClose: true,
-      showClear: true,
-      useStrict: true,
-      enabledHours: workTimes,
-      //disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 8 })], [moment({ h: 18 }), moment({ h: 24 })]],
+      enabledHours: [],
       stepping: 60,
       allowInputToggle: true
     });
     $("#visit_date_time_picker").on("dp.change", function (e) {
-      var d = e.date.day();
-      var start_time = parseInt(tStart[d-1])
-      var end_time = parseInt(tEnd[d-1])
-      var workTimes = []
-      for (i = 0; i < 24; i++) {
-        if (i>=start_time && i<end_time) {
-          workTimes[i] = i;
+      var chosen_date = e.date.format("YYYY-MM-DD HH:mm Z");
+      var zajete_godziny = [];
+      // $('#visit_date_time_picker').data('DateTimePicker').disable();
+      $.ajax({url: "/visits", dataType:"json", data: { doctor_id: $('#doctor_id').val(), visit_date: chosen_date }, success: function(result){
+        for(i=0; i<=result.length-1; i++) {
+          var m = moment.utc(result[i].visit_date).format("HH");
+          zajete_godziny.push(parseInt(m));
         }
-      }
-      $('#visit_date_time_picker').data('DateTimePicker').enabledHours(workTimes);
+        var dzien_tygodnia = e.date.day();
+        var start_time = parseInt(tStart[dzien_tygodnia-1])
+        var end_time = parseInt(tEnd[dzien_tygodnia-1])
+        var wolne_godziny = [];
+        for (i = 0; i < 24; i++) {
+          if (i>=start_time && i<end_time && !zajete_godziny.includes(i)) {
+            // console.log(zajete_godziny.includes(i));
+            wolne_godziny.push(i);
+          }
+        }
+        console.log(wolne_godziny);
+        $('#visit_date_time_picker').data('DateTimePicker').enabledHours(wolne_godziny);
+        // $('#visit_date_time_picker').data('DateTimePicker').enable();
+      }});
+      // console.log(zajete_godziny[12]);
+
+
     });
   });
 });

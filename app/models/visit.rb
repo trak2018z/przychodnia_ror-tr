@@ -3,6 +3,7 @@ class Visit < ApplicationRecord
   belongs_to :doctor
   validates :visit_date, :patient_id, :doctor_id, presence: true
   validate :visit_date_cannot_be_in_the_past
+  validates_uniqueness_of :visit_date, scope: :doctor_id
 
   private
   def visit_date_cannot_be_in_the_past

@@ -12,3 +12,13 @@
     margin:0;
   }
 }
+
+.bootstrap-datetimepicker-widget table td.hour:not(.disabled) {
+    background-color: #92B558;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table td.hour:not(.disabled):hover {
+    background-color: #92CC58;
+    color: #fff;
+}
