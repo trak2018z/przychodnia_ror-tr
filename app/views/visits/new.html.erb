@@ -5,6 +5,7 @@
         <h4>Nowa wizyta</h4>
       </div>
       <div class="panel-body">
+        <div id='brak_wolnych_godzin' class="alert alert-info" style="display: none;">Brak wolnych godzin w tym dniu. Wybierz inny termin.</div>
         <%= render 'form', visit: @visit %>
       </div>
     </div>

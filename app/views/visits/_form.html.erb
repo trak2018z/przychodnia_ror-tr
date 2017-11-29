@@ -2,13 +2,16 @@
 <%= errors_for(@visit) %>
 
 <%= content_tag "div", id: "times", data: { start_times: @start_times, end_times: @end_times } do %><% end %>
-<%= content_tag "div", id: "reserved", data: { dates: @visits } do %><% end %>
 
+<%= form.label "Lekarz" %>
+<div class="form-group disabled">
+  <%= text_field_tag 'doctor_name', @doctor.name, :disabled => true%>
+</div>
+<%= hidden_field_tag 'doctor_id', params[:doctor_id] %>
 <%= form.label :visit_date %>
 <div class="form-group">
   <input type='text' class="form-control" id='visit_date_time_picker' name='visit[visit_date]'/><br/>
 </div>
-<%= hidden_field_tag 'doctor_id', params[:doctor_id] %>
 <div class="actions">
   <%= form.submit "Zapisz się na wizytę", class: 'btn btn-primary'%>
 </div>
