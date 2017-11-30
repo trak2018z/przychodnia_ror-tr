@@ -21,10 +21,10 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-script-source', '1.8.0'
 gem 'devise'
 gem 'bootstrap-sass'
-#gem 'bootstrap-datepicker-rails'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'devise-bootstrap-views'
+gem "simple_calendar", "~> 2.0"
 
 # Gem BCrypt w wersji z github.com
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'

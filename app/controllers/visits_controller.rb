@@ -8,6 +8,7 @@ class VisitsController < ApplicationController
       doctor = ActiveSupport::JSON.decode(CGI.unescapeHTML(params[:doctor_id]))
       visit_date = CGI.unescapeHTML(params[:visit_date]).to_date
       @visits = Visit.where(doctor_id: doctor).where('DATE(visit_date) = ?', visit_date)
+      # @future_visits = Visit.where(patient_id: current_patient.id)
     else
       if patient_signed_in?
         @past_visits = Visit.where(patient_id: current_patient.id).where('visit_date < ?', DateTime.now)
@@ -28,8 +29,18 @@ class VisitsController < ApplicationController
   # GET /visits/1
   # GET /visits/1.json
   def show
-    if @visit.patient_id!=current_patient.id
-      then redirect_to root_path
+    if !patient_signed_in?
+      if !doctor_signed_in?
+        redirect_to root_path
+      else
+        if @visit.doctor_id!=current_doctor.id
+          redirect_to root_path
+        end
+      end
+    else
+      if @visit.patient_id!=current_patient.id
+        then redirect_to root_path
+      end
     end
   end
 

@@ -1,16 +1,19 @@
 pl:
-  #visits:
-  #  visit_date: "data wizyty"
-  #date:
-  #  order: [ !ruby/symbol day, !ruby/symbol month, !ruby/symbol year ]
-  #  formats:
-  #    default: "%Y-%m-%d"
-  #    short: "%b %d"
-  #    long: "%B %d, %Y"
-  #  day_names: [Poniedziałek, Wtorek, Środa, Czwartek, Piątek, Sobota, Niedziela]
-  #  abbr_day_names: [Pon, Wt, Śr, Czw, Pi, So, Nie]
-  #  month_names: [~, Styczeń, Luty, Marzec, Kwiecień, Maj, Czerwiec, Lipiec, Sierpień, Wrzesień, Październik, Listopad, Grudzień]
-  #  abbr_month_names: [~, St, Lu, Ma, Kw, Ma, Cz, Li, Si, Wr, Pa, Li, Gr]
+  simple_calendar:
+    previous: "Poprzedni"
+    next: "Następny"
+  visits:
+   visit_date: "data wizyty"
+  date:
+   order: [ !ruby/symbol day, !ruby/symbol month, !ruby/symbol year ]
+   formats:
+     default: "%Y-%m-%d"
+     short: "%b %d"
+     long: "%B %d, %Y"
+   day_names: [Niedziela, Poniedziałek, Wtorek, Środa, Czwartek, Piątek, Sobota]
+   abbr_day_names: [Nie, Pon, Wt, Śr, Czw, Pi, So]
+   month_names: [~, Styczeń, Luty, Marzec, Kwiecień, Maj, Czerwiec, Lipiec, Sierpień, Wrzesień, Październik, Listopad, Grudzień]
+   abbr_month_names: [~, St, Lu, Ma, Kw, Ma, Cz, Li, Si, Wr, Pa, Li, Gr]
   activerecord:
     errors:
       models:
@@ -30,6 +33,7 @@ pl:
           attributes:
             email:
               blank: "jest wymagany"
+              taken: "jest już w bazie, wybierz inny"
             password:
               blank: "jest wymagane"
               too_short: "jest za krótkie (należy użyć co najmniej 6 znaków)"

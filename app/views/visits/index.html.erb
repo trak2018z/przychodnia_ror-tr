@@ -1,16 +1,14 @@
 <div class="row">
-  <!--<div id="div1"><h2>Let jQuery AJAX Change This Text</h2>
-<button>Get External Content</button></div>-->
   <div class="col-sm-6">
-    <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="pill" href="#future">Umówione wizyty</a></li>
-      <li><a data-toggle="pill" href="#past">Minione wizyty</a></li>
-    </ul>
-    <div class="tab-content">
-      <div id="future" class="tab-pane fade in active">
-        <div class="panel panel-default devise-bs">
-          <div class="panel-heading"><h4>Zaplanowane wizyty</h4></div>
-          <div class="panel-body">
+    <div class="panel panel-default devise-bs">
+      <div class="panel-heading"><h4>Lista wizyt</h4></div>
+      <div class="panel-body">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="pill" href="#future">Umówione wizyty</a></li>
+          <li><a data-toggle="pill" href="#past">Minione wizyty</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="future" class="tab-pane fade in active">
             <div class="table-responsive">
               <% if @future_visits.nil? %>
               <%= link_to new_patient_session_path do %>Zaloguj się<% end %>, aby zobaczyć listę umówionych wizyt lub zarejestrować nową.
@@ -42,7 +40,6 @@
                     <td><% visit.doctor.specializations.each do |s| %>
                       <%= s.appellation %><br>
                       <% end %></td>
-                      <%# link_to 'Szczegóły', visit %>
                       <td><%= link_to 'Odwołaj wizytę', visit, class: 'btn btn-sm btn-warning', method: :delete, data: { confirm: 'Czy na pewno chcesz anulować wizytę?' } %></td>
                       <% end %>
                     </tr>
@@ -56,12 +53,7 @@
                 <% end %>
               </div>
             </div>
-          </div>
-        </div>
-        <div id="past" class="tab-pane fade">
-          <div class="panel panel-default devise-bs">
-            <div class="panel-heading"><h4>Historia wizyt</h4></div>
-            <div class="panel-body">
+            <div id="past" class="tab-pane fade">
               <div class="table-responsive">
                 <% if @past_visits.nil? %>
                 <%= link_to new_patient_session_path do %>Zaloguj się<% end %>, aby zobaczyć listę umówionych wizyt lub zarejestrować nową.
@@ -105,3 +97,27 @@
           </div>
         </div>
       </div>
+  <% if (patient_signed_in? || doctor_signed_in?) %>
+  <div class="col-sm-6">
+    <div class="panel panel-default devise-bs">
+      <div class="panel-heading"><h4>Kalendarz wizyt</h4></div>
+      <div class="panel-body">
+        <div id="visits_calendar">
+          <%= render partial: "calendar", locals: {events: @future_visits} %>
+          <%= calendar number_of_days: 1, attribute: :visit_date, events: @future_visits,
+              previous_link: visits_ajax_previous_link, next_link: visits_ajax_next_link do |date, visits| %>
+          <% if false %>
+          <%= date.day %>
+          <% end %>
+          <% visits.each do |v| %>
+          <div>
+            <%= link_to v.visit_date.strftime("%H:%M"), v %>
+          </div>
+          <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

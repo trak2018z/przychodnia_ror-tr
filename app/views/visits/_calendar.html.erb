@@ -1,0 +1,9 @@
+<%= month_calendar attribute: :visit_date, events: @future_visits,
+    previous_link: visits_ajax_previous_link, next_link: visits_ajax_next_link do |date, visits| %>
+<%= date.day %>
+<% visits.each do |v| %>
+<div>
+  <%= link_to v.visit_date.strftime("%H:%M"), v %>
+</div>
+<% end %>
+<% end %>
