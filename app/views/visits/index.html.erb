@@ -3,6 +3,12 @@
     <div class="panel panel-default devise-bs">
       <div class="panel-heading"><h4>Lista wizyt</h4></div>
       <div class="panel-body">
+        <%= render partial: "daily_calendar", locals: {events: @future_visits} %>
+        <% if !doctor_signed_in? %>
+        <%= link_to 'Zarejestruj nową wizytę', doctors_path, class: 'btn btn-primary' %>
+        <% end %>
+        <br>
+        <br>
         <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="pill" href="#future">Umówione wizyty</a></li>
           <li><a data-toggle="pill" href="#past">Minione wizyty</a></li>
@@ -46,10 +52,6 @@
                     <% end %>
                   </tbody>
                 </table>
-                <br>
-                <% if !doctor_signed_in? %>
-                <%= link_to 'Zarejestruj nową wizytę', doctors_path, class: 'btn btn-primary' %>
-                <% end %>
                 <% end %>
               </div>
             </div>
@@ -97,27 +99,16 @@
           </div>
         </div>
       </div>
-  <% if (patient_signed_in? || doctor_signed_in?) %>
-  <div class="col-sm-6">
-    <div class="panel panel-default devise-bs">
-      <div class="panel-heading"><h4>Kalendarz wizyt</h4></div>
-      <div class="panel-body">
-        <div id="visits_calendar">
-          <%= render partial: "calendar", locals: {events: @future_visits} %>
-          <%= calendar number_of_days: 1, attribute: :visit_date, events: @future_visits,
-              previous_link: visits_ajax_previous_link, next_link: visits_ajax_next_link do |date, visits| %>
-          <% if false %>
-          <%= date.day %>
-          <% end %>
-          <% visits.each do |v| %>
-          <div>
-            <%= link_to v.visit_date.strftime("%H:%M"), v %>
+      <% if (patient_signed_in? || doctor_signed_in?) %>
+      <div class="col-sm-6">
+        <div class="panel panel-default devise-bs">
+          <div class="panel-heading"><h4>Kalendarz wizyt</h4></div>
+          <div class="panel-body">
+            <div id="visits_calendar">
+              <%= render partial: "calendar", locals: {events: @future_visits} %>
+            </div>
           </div>
-          <% end %>
-          <% end %>
         </div>
       </div>
+      <% end %>
     </div>
-  </div>
-  <% end %>
-</div>

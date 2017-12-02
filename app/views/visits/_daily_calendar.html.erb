@@ -1,0 +1,21 @@
+<%= calendar number_of_days: 1, attribute: :visit_date, events: @future_visits do |date, visits| %>
+<% if false %>
+<%= date.day %>
+<% end %>
+<% if visits.count==0 %>
+Brak wizyt w tym dniu.
+<% else %>
+  <% visits.each do |v| %>
+    <div>
+      <% if doctor_signed_in? %>
+        <%= v.visit_date.strftime("%H:%M") + " " + v.patient.name %>
+      <% else %>
+        <% if false %>
+        <%= link_to v.visit_date.strftime("%H:%M")+v.doctor.name, v %>
+        <% end %>
+        <%= v.visit_date.strftime("%H:%M") + " - " + v.doctor.name %>
+      <% end %>
+    </div>
+    <% end %>
+  <% end %>
+<% end %>

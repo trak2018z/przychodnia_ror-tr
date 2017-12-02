@@ -1,9 +1,17 @@
 <%= month_calendar attribute: :visit_date, events: @future_visits,
-    previous_link: visits_ajax_previous_link, next_link: visits_ajax_next_link do |date, visits| %>
-<%= date.day %>
+previous_link: visits_ajax_previous_month_link, next_link: visits_ajax_next_month_link do |date, visits| %>
+<%= link_to date.day, visits_path(start_date: date) %>
+<% if false %>
 <% visits.each do |v| %>
 <div>
   <%= link_to v.visit_date.strftime("%H:%M"), v %>
 </div>
 <% end %>
+<% end %>
+<div>
+  <% if visits.count>0 %>
+  <!-- <%= visits.count.to_s %> -->
+  <span class="glyphicon glyphicon-star-empty"></span>
+  <%end%>
+</div>
 <% end %>

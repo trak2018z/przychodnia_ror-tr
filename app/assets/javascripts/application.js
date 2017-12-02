@@ -18,63 +18,65 @@
 //= require bootstrap-datetimepicker
 //= require_tree .
 
-$( document ).ready(function() {
-  $('.selectpicker').selectpicker({size: 5});
-});
+// $(document).ready(function() {
+//   $('.selectpicker').selectpicker({size: 5});
+// });  
 
-$(document).on('ready page:change', function() {
-  var tStart = times.dataset.startTimes.substring(1,times.dataset.startTimes.length-1).split(",");
-  var tEnd = times.dataset.endTimes.substring(1,times.dataset.endTimes.length-1).split(",");
-  var its_now = moment()
+if (window.location.pathname === "/visits/new") {
+  $(document).on('ready page:change', function() {
+    var tStart = times.dataset.startTimes.substring(1,times.dataset.startTimes.length-1).split(",");
+    var tEnd = times.dataset.endTimes.substring(1,times.dataset.endTimes.length-1).split(",");
+    var its_now = moment()
 
-  $(function () {
-    $('#visit_date_time_picker').datetimepicker({
-      locale: 'pl',
-      format: "DD/MM/YYYY, HH[:00]",
-      daysOfWeekDisabled: [0, 6],
-      defaultDate: null,
-      showClose: true,
-      useCurrent: false,
-      minDate: its_now,
-      keepInvalid: true,
-      collapse: true,
-      inline: true,
-      allowInputToggle: true,
-      focusOnShow: false,
-      sideBySide: false,
-      stepping: 60
-    });
-    $("#visit_date_time_picker").on("dp.change", function (e) {
-      var chosen_date = e.date.format("YYYY-MM-DD HH:mm Z");
-      var zajete_godziny = [];
-      $.ajax({url: "/visits", dataType:"json", data: { doctor_id: $('#doctor_id').val(), visit_date: chosen_date }, success: function(result){
-        for(i=0; i<=result.length-1; i++) {
-          var m = moment.utc(result[i].visit_date).format("HH");
-          zajete_godziny.push(parseInt(m));
-        }
-        var dzien_tygodnia = e.date.day();
-        var start_time = parseInt(tStart[dzien_tygodnia-1])
-        var end_time = parseInt(tEnd[dzien_tygodnia-1])
-        var wolne_godziny = [];
-        for (i = 0; i < 24; i++) {
-          if (i>=start_time && i<end_time && !zajete_godziny.includes(i)) {
-            wolne_godziny.push(i);
+    $(function () {
+      $('#visit_date_time_picker').datetimepicker({
+        locale: 'pl',
+        format: "DD/MM/YYYY, HH[:00]",
+        daysOfWeekDisabled: [0, 6],
+        defaultDate: null,
+        showClose: true,
+        useCurrent: false,
+        minDate: its_now,
+        keepInvalid: true,
+        collapse: true,
+        inline: true,
+        allowInputToggle: true,
+        focusOnShow: false,
+        sideBySide: false,
+        stepping: 60
+      });
+      $("#visit_date_time_picker").on("dp.change", function (e) {
+        var chosen_date = e.date.format("YYYY-MM-DD HH:mm Z");
+        var zajete_godziny = [];
+        $.ajax({url: "/visits", dataType:"json", data: { doctor_id: $('#doctor_id').val(), visit_date: chosen_date }, success: function(result){
+          for(i=0; i<=result.length-1; i++) {
+            var m = moment.utc(result[i].visit_date).format("HH");
+            zajete_godziny.push(parseInt(m));
           }
-        }
-        if (wolne_godziny.length == 0)
-        {
-          $('#brak_wolnych_godzin').show();
-          $('#visit_date_time_picker').data('DateTimePicker').clear();
-        }
-        else
-        {
-          $('#visit_date_time_picker').data('DateTimePicker').enabledHours(wolne_godziny);
-          $('#brak_wolnych_godzin').hide();
-        }
-      }});
+          var dzien_tygodnia = e.date.day();
+          var start_time = parseInt(tStart[dzien_tygodnia-1])
+          var end_time = parseInt(tEnd[dzien_tygodnia-1])
+          var wolne_godziny = [];
+          for (i = 0; i < 24; i++) {
+            if (i>=start_time && i<end_time && !zajete_godziny.includes(i)) {
+              wolne_godziny.push(i);
+            }
+          }
+          if (wolne_godziny.length == 0)
+          {
+            $('#brak_wolnych_godzin').show();
+            $('#visit_date_time_picker').data('DateTimePicker').clear();
+          }
+          else
+          {
+            $('#visit_date_time_picker').data('DateTimePicker').enabledHours(wolne_godziny);
+            $('#brak_wolnych_godzin').hide();
+          }
+        }});
+      });
     });
   });
-});
+}
 
 function searchNameFunction() {
   var input, filter, table, tr, td, i;

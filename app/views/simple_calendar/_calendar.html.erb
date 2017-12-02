@@ -1,38 +1,47 @@
 <div class="simple-calendar">
   <div class="calendar-heading">
-    <div class="row">
-      <div class="col-sm-4" style="text-align:center">
-        <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %></div>
-        <div class="col-sm-4" style="text-align:center">
-          <span class="calendar-title"><%= start_date %></span></div>
-          <div class="col-sm-4" style="text-align:center">
-            <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %></div>
-          </div>
-        </div>
-
-        <table class="table table-striped">
-          <!-- <thead>
-          <tr>
-          <% date_range.slice(0, 7).each do |day| %>
-          <th><%= t('date.abbr_day_names')[day.wday] %></th>
-          <% end %>
-        </tr>
-      </thead> -->
-      <thead>Lista wizyt</thead>
-      <tbody>
-        <% date_range.each_slice(7) do |week| %>
-        <%= content_tag :tr, class: calendar.tr_classes_for(week) do %>
-        <% week.each do |day| %>
-        <%= content_tag :td, class: calendar.td_classes_for(day) do %>
-        <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(block) %>
-        <% capture_haml(day, sorted_events.fetch(day, []), &block) %>
-        <% else %>
-        <% block.call day, sorted_events.fetch(day, []) %>
-        <% end %>
-        <% end %>
-        <% end %>
-        <% end %>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="row" style="text-align:center">
+      <div class="col-sm-4">
+        <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view,
+        class: "btn btn-default" %>
+      </div>
+      <div class="col-sm-4">
+        <h4>
+          <span class="calendar-title">
+            <%= start_date.strftime("%d/%m/%Y") %>
+          </span>
+        </h4>
+      </div>
+      <div class="col-sm-4">
+        <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view,
+        class: "btn btn-default" %>
+      </div>
+    </div>
   </div>
+  <br>
+  <table class="table table-striped">
+    <!-- <thead>
+    <tr>
+    <% date_range.slice(0, 7).each do |day| %>
+    <th><%= t('date.abbr_day_names')[day.wday] %></th>
+    <% end %>
+  </tr>
+</thead> -->
+<!-- <thead>Lista wizyt</thead> -->
+<tbody>
+  <% date_range.each_slice(7) do |week| %>
+  <%= content_tag :tr, class: calendar.tr_classes_for(week) do %>
+  <% week.each do |day| %>
+  <%= content_tag :td, class: calendar.td_classes_for(day) do %>
+  <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(block) %>
+  <% capture_haml(day, sorted_events.fetch(day, []), &block) %>
+  <% else %>
+  <% block.call day, sorted_events.fetch(day, []) %>
+  <% end %>
+  <% end %>
+  <% end %>
+  <% end %>
+  <% end %>
+</tbody>
+</table>
+</div>
