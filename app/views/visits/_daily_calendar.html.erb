@@ -8,7 +8,7 @@ Brak wizyt w tym dniu.
   <% visits.each do |v| %>
     <div>
       <% if doctor_signed_in? %>
-        <%= v.visit_date.strftime("%H:%M") + " " + v.patient.name %>
+        <%= v.visit_date.strftime("%H:%M") + " - " + v.patient.name %>
       <% else %>
         <% if false %>
         <%= link_to v.visit_date.strftime("%H:%M")+v.doctor.name, v %>

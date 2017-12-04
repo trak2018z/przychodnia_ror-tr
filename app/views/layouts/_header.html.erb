@@ -12,7 +12,9 @@
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
 		<li><%= link_to 'O stronie', static_pages_about_url %></li>
+    <% if patient_signed_in? || doctor_signed_in? %>
     <li><%= link_to 'Wizyty', visits_path %></li>
+    <% end %>
     <li><%= link_to "Lista lekarzy", doctors_url %></li>
       </ul>
 
