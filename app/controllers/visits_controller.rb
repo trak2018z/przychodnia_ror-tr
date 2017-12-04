@@ -3,19 +3,28 @@ class VisitsController < ApplicationController
   before_action :set_visit, only: [:show, :destroy]
   before_action :authenticate_patient!, only: [:new, :create, :destroy]
 
+  def reserved_datetimes
+    puts "RESERVED"
+    if request.xhr?
+      doctor = ActiveSupport::JSON.decode(CGI.unescapeHTML(params[:doctor_id]))
+      visit_date = CGI.unescapeHTML(params[:visit_date]).to_date
+      @visits = Visit.where(doctor_id: doctor).where('DATE(visit_date) = ?', visit_date)
+    end
+  end
+
   def index
     if request.xhr?
-      if request.path == "/visits"
-        if doctor_signed_in?
-          @future_visits = Visit.where(doctor_id: current_doctor.id)
-        else
-          @future_visits = Visit.where(patient_id: current_patient.id)
-        end
+      # if request.path.start_with?("visits")
+      # doctor = ActiveSupport::JSON.decode(CGI.unescapeHTML(params[:doctor_id]))
+      # visit_date = CGI.unescapeHTML(params[:visit_date]).to_date
+      # @visits = Visit.where(doctor_id: doctor).where('DATE(visit_date) = ?', visit_date)
+      # else
+      if doctor_signed_in?
+        @future_visits = Visit.where(doctor_id: current_doctor.id)
       else
-        doctor = ActiveSupport::JSON.decode(CGI.unescapeHTML(params[:doctor_id]))
-        visit_date = CGI.unescapeHTML(params[:visit_date]).to_date
-        @visits = Visit.where(doctor_id: doctor).where('DATE(visit_date) = ?', visit_date)
+        @future_visits = Visit.where(patient_id: current_patient.id)
       end
+      # end
       # @future_visits = Visit.where(patient_id: current_patient.id)
     else
       if patient_signed_in?

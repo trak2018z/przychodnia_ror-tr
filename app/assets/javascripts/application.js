@@ -20,7 +20,7 @@
 
 // $(document).ready(function() {
 //   $('.selectpicker').selectpicker({size: 5});
-// });  
+// });
 
 if (window.location.pathname === "/visits/new") {
   $(document).on('ready page:change', function() {
@@ -48,10 +48,12 @@ if (window.location.pathname === "/visits/new") {
       $("#visit_date_time_picker").on("dp.change", function (e) {
         var chosen_date = e.date.format("YYYY-MM-DD HH:mm Z");
         var zajete_godziny = [];
-        $.ajax({url: "/visits", dataType:"json", data: { doctor_id: $('#doctor_id').val(), visit_date: chosen_date }, success: function(result){
+        $.ajax({url: "reserved_datetimes", dataType:"json", data: { doctor_id: $('#doctor_id').val(), visit_date: chosen_date }, success: function(result){
+          console.log(result);
           for(i=0; i<=result.length-1; i++) {
             var m = moment.utc(result[i].visit_date).format("HH");
             zajete_godziny.push(parseInt(m));
+            console.log(parseInt(m));
           }
           var dzien_tygodnia = e.date.day();
           var start_time = parseInt(tStart[dzien_tygodnia-1])
@@ -60,6 +62,7 @@ if (window.location.pathname === "/visits/new") {
           for (i = 0; i < 24; i++) {
             if (i>=start_time && i<end_time && !zajete_godziny.includes(i)) {
               wolne_godziny.push(i);
+              // console.log(i);
             }
           }
           if (wolne_godziny.length == 0)

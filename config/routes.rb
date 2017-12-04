@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :visits, except:[:edit, :update] #do
-    # collection do
-    #   get 'reserved_datetimes' => "visits#reserved_datetimes"
-    # end
-  #end
+  resources :visits, except:[:edit, :update] do
+    collection do
+      get 'reserved_datetimes' => "visits#reserved_datetimes"
+    end
+  end
+
   devise_for :patients # adresy Devise dla pacjentów
   devise_for :doctors, :class_name => 'Doctor', :controllers => {:registrations => "doctors/registrations"} do
     get "doctor/sign_up" => "doctor/registrations#new", :as => :new_doctor_registration # obsługa rejestracji kont lekarzy przez odpowiedni kontroler
